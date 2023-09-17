@@ -71,7 +71,7 @@ int main(void)
 
     while(1)
     {
-        Delay_Ms(250);
+        Delay_Ms(500);
         GPIO_WriteBit(GPIOA, GPIO_Pin_5, (i % 4 == 1 || i % 4 == 2) ? Bit_SET : Bit_RESET);
         GPIO_WriteBit(GPIOB, GPIO_Pin_5, (i % 4 == 2 || i % 4 == 3) ? Bit_RESET : Bit_SET);
         i++;
