@@ -10,7 +10,7 @@
 * WCH-Link E (秋月で750円)
 
 ### Connection
-![](https://github.com/shujima/type-c-card/blob/master/img/conection.img)
+![](https://github.com/shujima/type-c-card/blob/master/img/connection.jpg)
 
 
 * x : None (何もつながない)
@@ -22,6 +22,6 @@
 
 ### LED blink sample
 
-[こちらのブログ](https://www.shujima.work/entry/2023/09/17/235534)を参考に[サンプルのプロジェクト](https://github.com/shujima/type-c-card/sample/MoonRiverProject_L-chika)をビルドし、実行する。
+[こちらのブログ](https://www.shujima.work/entry/2023/09/17/235534)を参考に[サンプルのプロジェクト](https://github.com/shujima/type-c-card/tree/master/sample/MoonRiverProject_L-chika)をビルドし、実行する。
 
 LEDが緑→水色→青と点滅すればOK。
