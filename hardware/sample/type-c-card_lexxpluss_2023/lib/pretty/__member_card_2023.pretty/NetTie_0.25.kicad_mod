@@ -1,0 +1,26 @@
+(footprint "NetTie_0.25" (version 20221018) (generator pcbnew)
+  (layer "F.Cu")
+  (attr smd)
+  (net_tie_pad_groups "1,2")
+  (fp_text reference "REF**" (at 0.1 -0.9 unlocked) (layer "F.SilkS") hide
+      (effects (font (size 1 1) (thickness 0.15)))
+    (tstamp 01cee433-909c-457d-b396-acdb978d5c97)
+  )
+  (fp_text value "NetTie_0.25" (at 0 1 unlocked) (layer "F.Fab") hide
+      (effects (font (size 1 1) (thickness 0.15)))
+    (tstamp d38e045e-6baf-484d-b53a-c273feac0dcc)
+  )
+  (fp_poly
+    (pts
+      (xy -0.05 -0.1)
+      (xy 0.05 -0.1)
+      (xy 0.05 0.1)
+      (xy -0.05 0.1)
+    )
+
+    (stroke (width 0) (type solid)) (fill solid) (layer "F.Cu") (tstamp b8285b92-418e-42fd-95d4-4ff115194f38))
+  (pad "1" smd roundrect (at -0.15 0) (size 0.3 0.2) (layers "F.Cu") (roundrect_rratio 0.25)
+    (thermal_bridge_angle 45) (tstamp 3e18f688-e356-471c-8afc-64c30423a5cf))
+  (pad "2" smd roundrect (at 0.15 0) (size 0.3 0.2) (layers "F.Cu") (roundrect_rratio 0.25)
+    (thermal_bridge_angle 45) (tstamp b8ccc120-f3f3-4423-8982-35253eb919ac))
+)

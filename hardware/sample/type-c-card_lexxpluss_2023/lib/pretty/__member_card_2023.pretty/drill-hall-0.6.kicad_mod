@@ -1,0 +1,13 @@
+(footprint "drill-hall-0.6" (version 20221018) (generator pcbnew)
+  (layer "F.Cu")
+  (attr through_hole)
+  (fp_text reference "REF**" (at 0 -0.5 unlocked) (layer "F.SilkS") hide
+      (effects (font (size 1 1) (thickness 0.15)))
+    (tstamp f949a0ef-6cab-4fab-88f5-cd4daec42901)
+  )
+  (fp_text value "drill-hall-0.6" (at 0 1 unlocked) (layer "F.Fab") hide
+      (effects (font (size 1 1) (thickness 0.15)))
+    (tstamp e82bd292-6247-4bfd-9070-7b4d58454525)
+  )
+  (pad "" np_thru_hole circle (at 0 0) (size 0.6 0.6) (drill 0.6) (layers "F&B.Cu" "*.Mask") (tstamp 41a4a354-e7e4-4987-a8fd-0a8b55626af0))
+)

@@ -1,47 +1,23 @@
+
+`#typeccard`
+
+![](https://github.com/shujima/type-c-card/blob/master/img/card1.jpg)
+![](https://github.com/shujima/type-c-card/blob/master/img/card2.jpg)
+
+
+
 # Overview
 
-## Functions
-* USB Flash Drive
-* NFC-Tag
-* RISC-V MCU
-* 5 x 14 Bi-color LED Display
-* USB PD Controller
+## Hardware info
 
-![](https://github.com/shujima/type-c-card/blob/master/img/BlockDiagram-Current.drawio.svg)
+### USB Type-C Connector Document
 
-## Detail Structure
+* [USB Type-C Connector Library File](https://github.com/shujima/type-c-card/tree/master/hardware/lib_usb-type-c/)
 
+### Hardware Info / Sample Card
 
-
-### Signal Connection
-* I2C
-  * MCU CH32V203G6U6
-  * LED Driver IS31FL3731
-  * NFC Tag ST25DV04K
-  * TPS65987DDHRSHR
-* CAN
-  * MCU CAN Control
-* USB 2.0
-  * USB Switch TS3USB221RSER
-    * USB-Serial FT231XQ-R
-      * MCU Serial Port
-  * USB Card Reader USB2241I-AEZG-06
-    * eMMC Flash Chip THGBMNG5D1LBAIL
-      * USB Flash Drive
-
-### Power 
-
-* USB VBUS (5-20V)
-  * DC-DC Converter 4.5V AP63357DV-7
-    * USB-Serial
-    * LED Display
-    * CAN Driver
-  * DC-DC Converter 3.3V AP63357DV-7
-    * Flash Drive
-    * RiSC-V MCU
-* Energy Harvesting
-  * NFC Tag
-
+* [LexxPluss_2023]((https://github.com/shujima/type-c-card/tree/master/hardware/sample/type-c-card_lexxpluss_2023)
+  * This is a first prototype of typeccard to promote the company [LexxPluss](https://lexxpluss.com)
 
 # How To Write Firmware
 
@@ -66,5 +42,14 @@
 
 LEDが緑→水色→青と点滅すればOK。
 
-# Erratta
-## Jumpers
+# License
+* Undefined the detail currently
+  * "Infinitely open source"
+* Disclaimer
+  * Please understand that it's created for hobby purposes. There is no intention to incorporate it into products or for commercial sales.
+  * Sufficient verification regarding safety and compatibility has not been conducted.
+  * Since it's a hardware product, special consideration is required, especially regarding the potential risk of harming the human body or connected devices.
+* Creating a hardware copy
+  * On the sample files, "lexxpluss_2023" is included a trademark of LexxPluss Corporation, and you cannot use it freely without their permission.
+  * In particular, when it comes to producing copies within the bounds of common sense, such as for personal hobby use, we have no intention of claiming rights over the board's external shape, component placement, functionality, or any related aspects.
+  * Please feel free to add the hashtag #typeccard to your related posts (not obligatory).
