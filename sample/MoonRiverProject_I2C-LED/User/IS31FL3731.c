@@ -8,6 +8,19 @@
 #define I2C_ADDR 0b1110100
 #define I2C_BOUD 80000
 
+u8 page_now = 9;
+
+u8 matrix_data[2][5][100] = {}; // 表示したいデータ、PWMの強さ [緑/青][縦][横]
+
+u8 matrix_table[5][14] = {
+                  {0,1,2,3,4,5,6,7,8,9,10,11,12,13},
+        {14,15,16,17,18,19,20,21,22,23,24,25,26,27},
+        {28,29,30,31,32,33,34,35,36,37,38,39,40,41},
+        {42,43,44,45,46,47,48,49,50,51,52,53,54,55},
+        {56,57,58,59,60,61,62,63,64,65,66,67,68,69}
+};
+
+
 void IS31FL3731_begin()
 {
     GPIO_InitTypeDef GPIO_InitStructure={0};
@@ -87,13 +100,125 @@ void I2C_write(u16 address, u8 reg, u8 length, u8 *data )
     I2C_GenerateSTOP( I2C1, ENABLE );
 }
 
-void IS31FL3731_selectBank(u8 bank)
+void IS31FL3731_selectPage(u8 page)
 {
-    I2C_write(I2C_ADDR, 0xFD,1,&bank);
+    u8 d = 0x0B;
+    if(page >= 1 && page <= 8)
+    {
+        d = page - 1;
+    }
+    else if(page == 9)
+    {
+        d = 0x0B;
+    }
+
+    I2C_write(I2C_ADDR, 0xFD,1,&d);
+    page_now = page;
+
 }
 
-void IS31FL3731_write1byte(u8 bank, u8 reg, u8 data)
+void IS31FL3731_write1byte(u8 page, u8 reg, u8 data)
 {
-    IS31FL3731_selectBank(bank);
+    IS31FL3731_selectPage(page);
     I2C_write(I2C_ADDR, reg,1,&data);
 }
+
+// Write to function regulator (setting)
+void IS31FL3731_writeFuncReg(u8 reg, u8 data)
+{
+    if(page_now != 9)
+    {
+        IS31FL3731_selectPage(9);
+    }
+
+    I2C_write(I2C_ADDR, reg, 1, &data);
+}
+
+
+void IS31FL3731_selectFrame(u8 frame)
+{
+    IS31FL3731_writeFuncReg(ISSI_REG_PICTUREFRAME, frame - 1);
+    page_now=frame;
+}
+
+void IS31FL3731_clearFrame(u8 frame)
+{
+    u8 buf[8] = {0,0,0,0,0,0,0,0}; // 0
+    //u8 buf[8] = {255,255,255,255,255,255,255,255}; // 0
+
+
+    if(page_now != frame)
+    {
+        IS31FL3731_selectPage(frame);
+    }
+    for(int i = 0 ; i < 18 ; i ++)
+    {
+        I2C_write(I2C_ADDR, 0x24 + i * 8, 8,buf);
+    }
+
+    u8 i255 = 255;
+
+    //LED Control Register (関係ないので他の関数に分けるべきかも)
+    for(int i = 0 ; i < 18 ; i ++)
+    {
+        I2C_write(I2C_ADDR, i, 1,&i255);
+    }
+    //Blink Control Register (関係ないので他の関数)
+    for(int i = 0 ; i < 18 ; i ++)
+    {
+        I2C_write(I2C_ADDR, 0x12 + i, 1,&i255);
+    }
+
+
+    IS31FL3731_selectPage(page_now);
+}
+
+//vertical 0-4, hor:0-13
+void IS31FL3731_setPixel(u8 vertical,u8 horizontal,u8 green,u8 blue)
+{
+    matrix_data[0][vertical][horizontal] = green;
+    matrix_data[1][vertical][horizontal] = blue;
+}
+
+void IS31FL3731_writePixelsToFrame(u8 frame, u8 offset)
+{
+
+    //u8 buf2[8] = {255,255,255,255,255,255,255,255};
+    u8 buf[144];
+    //u8 buf2[144] = {3};
+    u8 t;
+
+
+    for(u8 j = 0 ; j < 5 ; j ++)
+    {
+        for (u8 k = 0 ; k < 14 ; k ++)
+        {
+            t = matrix_table[j][k];
+            //8byteずつ、緑と青が交互に記録されるので、
+            buf[(u8)(t / 8) * 16 + t % 8] = matrix_data[0][j][k+offset]; //green
+            buf[(u8)(t / 8) * 16 + t % 8 + 8 ] = matrix_data[1][j][k+offset]; //blue
+
+        }
+    }
+
+    if(page_now != frame)
+    {
+        IS31FL3731_selectPage(frame);
+    }
+    for(int i = 0 ; i < 18 ; i ++)
+    {
+        I2C_write(I2C_ADDR, 0x24 + i * 8, 8,buf);
+    }
+
+//    I2C_write(I2C_ADDR, 0x24, 8, buf2);
+//    I2C_write(I2C_ADDR, 0x2C, 8, buf2);
+//    for(int i = 0 ; i < 18 ; i ++)
+//    {
+//        I2C_write(I2C_ADDR, 0x24 + i * 8, 8,buf2);
+//    }
+    IS31FL3731_selectPage(page_now);
+
+}
+
+
+//進捗メモ。なぜか1つのLEDを操作したつもりがいくつものLEDが付いてしまう。配列がおかしいのかICの操作方法がおかしいのかよくわからない。シリアルなどのデバッグ機能を使えるようにしたりするほうが早道ではないか。

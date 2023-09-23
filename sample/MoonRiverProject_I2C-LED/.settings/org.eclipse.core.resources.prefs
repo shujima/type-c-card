@@ -4,6 +4,7 @@ encoding//Debug/debug.h=GBK
 encoding//Ld/Link.ld=GBK
 encoding//Peripheral/inc/ch32v20x_gpio.h=GBK
 encoding//Peripheral/src/ch32v20x_gpio.c=GBK
+encoding//Peripheral/src/ch32v20x_i2c.c=GBK
 encoding//Peripheral/src/ch32v20x_misc.c=GBK
 encoding//Startup/startup_ch32v20x_D6.S=GBK
 encoding//User/IS31FL3731.c=GBK

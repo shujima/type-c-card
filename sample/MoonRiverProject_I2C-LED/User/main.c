@@ -19,6 +19,7 @@
 
 #include "debug.h"
 #include "IS31FL3731.h"
+#include <stdlib.h>
 
 /* Global define */
 
@@ -124,8 +125,28 @@ int main(void)
 
     //I2C_write(I2C_ADDR << 1, 0, 4, TxData );
 
-    IS31FL3731_write1byte(0x0B, 0x0A, 0x00);///
-    IS31FL3731_write1byte(0x0B, 0x0A, 0x01);
+    //IS31FL3731_write1byte(0x0B, 0x0A, 0x00); //Shutdown
+    IS31FL3731_writeFuncReg(ISSI_REG_SHUTDOWN, 0);
+    Delay_Ms(100);
+    //IS31FL3731_write1byte(0x0B, 0x0A, 0x01); //Start
+
+    IS31FL3731_writeFuncReg(ISSI_REG_SHUTDOWN, 1);
+    IS31FL3731_writeFuncReg(ISSI_REG_CONFIG,ISSI_REG_CONFIG_PICTUREMODE);
+
+    IS31FL3731_clearFrame(1);
+
+    IS31FL3731_selectFrame(2); //¤Ò¤ç¤¦¤¸¤µ¤»¤Æ¤¤¤ë¥Õ¥ì©`¥à¤Ë¤Ï•ø¤­Þz¤á¤Ê¤¤¡£•ø¤­Þz¤àÇ°¤Ë„e¤Î¤ä¤Ä¤ËÙI¤¨¤Ê¤¤¤È¤¤¤±¤Ê¤¤
+    //Delay_Ms(200);
+//
+    IS31FL3731_setPixel(0,0,20,0);
+    //IS31FL3731_setPixel(1,1,255,255);
+    //IS31FL3731_setPixel(2,2,255,255);
+    IS31FL3731_writePixelsToFrame(1, 0);
+    IS31FL3731_selectFrame(1);
+//
+
+
+
 
     //for( j =0; j < 5; j++)
 //    {

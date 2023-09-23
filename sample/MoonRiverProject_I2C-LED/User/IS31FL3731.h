@@ -35,5 +35,9 @@
 
 void IS31FL3731_begin();
 void I2C_write(u16 address, u8 reg, u8 length, u8 *data );
-void IS31FL3731_selectBank(u8 bank);
-void IS31FL3731_write1byte(u8 bank, u8 reg, u8 data);
+void IS31FL3731_selectPage(u8 page);
+void IS31FL3731_write1byte(u8 page, u8 reg, u8 data);
+void IS31FL3731_selectFrame(u8 frame);
+void IS31FL3731_clearFrame(u8 frame);
+void IS31FL3731_setPixel(u8 vertical,u8 horizontal,u8 green,u8 blue);
+void IS31FL3731_writePixelsToFrame(u8 frame, u8 offset);
