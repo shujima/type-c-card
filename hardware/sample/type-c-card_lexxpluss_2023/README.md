@@ -1,6 +1,19 @@
+![](https://github.com/shujima/type-c-card/blob/master/img/card1.jpg)
+![](https://github.com/shujima/type-c-card/blob/master/img/card2.jpg)
+
 # Overview
 * 今後追記予定の項目
   * i2cのスペック、アドレス
+
+
+# KiCAD Project
+* This can open with KiCAD 7 or later
+
+# Manufacturing Data
+* [Gerber File](https://github.com/shujima/type-c-card/blob/master/hardware\sample\type-c-card_lexxpluss_2023\production\type-c-card_lexxpluss_2023_2023-09-23_17-43-02)
+* [BOM](https://github.com/shujima/type-c-card/blob/master/hardware\sample\type-c-card_lexxpluss_2023\production\type-c-card_lexxpluss_2023_2023-09-23_17-43-02/bom.csv)
+
+# Specification
 
 ## Functions
 * USB Flash Drive
@@ -58,8 +71,9 @@
 |TPS65987(USB PD)|0100010*|USB PD|
 
 #### GPIO Pin Assign
+
 |Pin|Name|Dir|Usage|
-|-|-|-|^|
+|-|-|-|-|
 |PA0|ST25_GPO|INPUT|Interrupt Input from ST25DV|
 |PA1|Voltage_FB|AnalogIN|PD Voltage FB (Voltage Divided 1:22)|
 |PA2|PowerOut|OUTPUT|PD Output port FET Gate(Low:Off, High:On)|
