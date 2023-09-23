@@ -10,8 +10,8 @@
 * This can open with KiCAD 7 or later
 
 # Manufacturing Data
-* [Gerber File](https://github.com/shujima/type-c-card/blob/master/hardware\sample\type-c-card_lexxpluss_2023\production\type-c-card_lexxpluss_2023_2023-09-23_17-43-02)
-* [BOM](https://github.com/shujima/type-c-card/blob/master/hardware\sample\type-c-card_lexxpluss_2023\production\type-c-card_lexxpluss_2023_2023-09-23_17-43-02/bom.csv)
+* [Gerber File](https://github.com/shujima/type-c-card/blob/master/hardware/sample/type-c-card_lexxpluss_2023/production/type-c-card_lexxpluss_2023_2023-09-23_17-43-02)
+* [BOM](https://github.com/shujima/type-c-card/blob/master/hardware/sample/type-c-card_lexxpluss_2023/production/type-c-card_lexxpluss_2023_2023-09-23_17-43-02/bom.csv)
 
 # Specification
 
