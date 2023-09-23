@@ -16,7 +16,7 @@
 
 ### Hardware Info / Sample Card
 
-* [LexxPluss_2023]((https://github.com/shujima/type-c-card/tree/master/hardware/sample/type-c-card_lexxpluss_2023)
+* [LexxPluss_2023](https://github.com/shujima/type-c-card/tree/master/hardware/sample/type-c-card_lexxpluss_2023)
   * This is a first prototype of typeccard to promote the company [LexxPluss](https://lexxpluss.com)
 
 # How To Write Firmware
