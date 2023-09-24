@@ -62,40 +62,6 @@ void GPIO_Toggle_INIT(void)
 
 }
 
-//void IIC_Init(u32 bound, u16 address)
-//{
-//    GPIO_InitTypeDef GPIO_InitStructure={0};
-//    I2C_InitTypeDef I2C_InitTSturcture={0};
-//
-//    RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE );
-//    //GPIO_PinRemapConfig(GPIO_Remap_I2C1, ENABLE);
-//    RCC_APB1PeriphClockCmd( RCC_APB1Periph_I2C1, ENABLE );
-//
-//    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
-//    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
-//    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-//    GPIO_Init( GPIOB, &GPIO_InitStructure );
-//
-//    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
-//    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
-//    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-//    GPIO_Init( GPIOB, &GPIO_InitStructure );
-//
-//    I2C_InitTSturcture.I2C_ClockSpeed = bound;
-//    I2C_InitTSturcture.I2C_Mode = I2C_Mode_I2C;
-//    I2C_InitTSturcture.I2C_DutyCycle = I2C_DutyCycle_16_9;
-//    I2C_InitTSturcture.I2C_OwnAddress1 = address;
-//    I2C_InitTSturcture.I2C_Ack = I2C_Ack_Enable;
-//    I2C_InitTSturcture.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
-//    I2C_Init( I2C1, &I2C_InitTSturcture );
-//
-//    I2C_Cmd( I2C1, ENABLE );
-//
-//#if (I2C_MODE == HOST_MODE)
-//    I2C_AcknowledgeConfig( I2C1, ENABLE );
-//
-//#endif
-//}
 
 /*********************************************************************
  * @fn      main
@@ -119,63 +85,73 @@ int main(void)
     printf("GPIO Toggle TEST\r\n");
     GPIO_Toggle_INIT();
 
+    GPIO_WriteBit(GPIOA, GPIO_Pin_5, Bit_SET);
+
     printf("IIC Host mode\r\n");
-    //IS31FL3731_begin( 80000, I2C_ADDR << 1);
     IS31FL3731_begin();
-
-    //I2C_write(I2C_ADDR << 1, 0, 4, TxData );
-
-    //IS31FL3731_write1byte(0x0B, 0x0A, 0x00); //Shutdown
     IS31FL3731_writeFuncReg(ISSI_REG_SHUTDOWN, 0);
     Delay_Ms(100);
-    //IS31FL3731_write1byte(0x0B, 0x0A, 0x01); //Start
-
     IS31FL3731_writeFuncReg(ISSI_REG_SHUTDOWN, 1);
     IS31FL3731_writeFuncReg(ISSI_REG_CONFIG,ISSI_REG_CONFIG_PICTUREMODE);
 
     IS31FL3731_clearFrame(1);
 
-    IS31FL3731_selectFrame(2); //¤Ò¤ç¤¦¤¸¤µ¤»¤Æ¤¤¤ë¥Õ¥ì©`¥à¤Ë¤Ï•ø¤­Þz¤á¤Ê¤¤¡£•ø¤­Þz¤àÇ°¤Ë„e¤Î¤ä¤Ä¤ËÙI¤¨¤Ê¤¤¤È¤¤¤±¤Ê¤¤
-    //Delay_Ms(200);
-//
-    IS31FL3731_setPixel(0,0,20,0);
-    //IS31FL3731_setPixel(1,1,255,255);
-    //IS31FL3731_setPixel(2,2,255,255);
-    IS31FL3731_writePixelsToFrame(1, 0);
-    IS31FL3731_selectFrame(1);
-//
+
+    //Flow
+    for(int i = 0; i < 5 ; i ++)
+    {
+        for(int j = 0; j < 14 ; j ++)
+        {
+            IS31FL3731_setBufPixel(i,j,50,0);
+            IS31FL3731_writePixelsToFrame(1, 0);
+
+            Delay_Ms(10);
+
+            IS31FL3731_setBufPixel(i,j,0,0);
+        }
+    }
+
+    for(int i = 0; i < 5 ; i ++)
+    {
+        for(int j = 0; j < 14 ; j ++)
+        {
+            IS31FL3731_setBufPixel(i,j,0,50);
+            IS31FL3731_writePixelsToFrame(1, 0);
+
+            Delay_Ms(2);
+
+            IS31FL3731_setBufPixel(i,j,0,0);
+        }
+    }
+
+    //Draw Logo by pixel
+    //Logo +
+    IS31FL3731_setBufPixel(3,5,50,0);
+    IS31FL3731_setBufPixel(2,6,50,0);
+    IS31FL3731_setBufPixel(3,6,50,0);
+    IS31FL3731_setBufPixel(4,6,50,0);
+    IS31FL3731_setBufPixel(3,7,50,0);
+    //Logo P
+    IS31FL3731_setBufPixel(1,6,40,50);
+    IS31FL3731_setBufPixel(1,7,40,50);
+    IS31FL3731_setBufPixel(1,8,40,50);
+    IS31FL3731_setBufPixel(2,9,40,50);
+    IS31FL3731_setBufPixel(3,8,40,50);
 
 
+    //Draw String
+    IS31FL3731_setBufPrint("Welcome to LexxPluss", 100, 0, 14);
+
+    IS31FL3731_writePixelsToFrame(1, i); //Drawing
+    Delay_Ms(500);
+
+    for(u8 i = 0 ; i < 400 ; i ++)
+    {
+        IS31FL3731_writePixelsToFrame(1, i);
+        Delay_Ms(10);
+    }
 
 
-    //for( j =0; j < 5; j++)
-//    {
-//        while( I2C_GetFlagStatus( I2C1, I2C_FLAG_BUSY ) != RESET );
-//
-//
-//
-//        I2C_GenerateSTART( I2C1, ENABLE );
-//        while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_MODE_SELECT ) );
-//        I2C_Send7bitAddress( I2C1, 0b11101000, I2C_Direction_Transmitter );
-//
-//        while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) );
-//
-//        for( i=0; i< 6;i++ )
-//        {
-//            if( I2C_GetFlagStatus( I2C1, I2C_FLAG_TXE ) !=  RESET )
-//            {
-//                //Delay_Ms(100);
-//                I2C_SendData( I2C1, TxData[i] );
-//            }
-//        }
-//
-//        while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-//        I2C_GenerateSTOP( I2C1, ENABLE );
-//        Delay_Ms(1000);
-//    }
-//
-//
-//
     while(1)
     {
         Delay_Ms(1000);

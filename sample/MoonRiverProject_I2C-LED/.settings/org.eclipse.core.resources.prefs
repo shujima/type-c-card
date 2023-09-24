@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//Core/core_riscv.c=GBK
+encoding//Core/core_riscv.h=GBK
 encoding//Debug/debug.c=GBK
 encoding//Debug/debug.h=GBK
 encoding//Ld/Link.ld=GBK
@@ -9,6 +11,7 @@ encoding//Peripheral/src/ch32v20x_misc.c=GBK
 encoding//Startup/startup_ch32v20x_D6.S=GBK
 encoding//User/IS31FL3731.c=GBK
 encoding//User/IS31FL3731.h=GBK
+encoding//User/ch32v20x_conf.h=GBK
 encoding//User/ch32v20x_it.c=GBK
 encoding//User/ch32v20x_it.h=GBK
 encoding//User/main.c=GBK
