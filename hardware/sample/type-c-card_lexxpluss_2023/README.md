@@ -87,7 +87,7 @@
 |PB4|TPS65987_I2C_IRQ|INPUT|I2C Interrupt Input from TPS65987|
 |PB5|DEBUG-LED-B|OUTPUT|Debug LED (Blue)|
 |PB6|I2C_SCL|OUTPUT|I2C Bus (Clock) I2C1|
-|PB7|I2C_SDA|I/O|I2C Bus (Data), I2C1|
+|PB7|I2C_SDA|I/O|I2C Bus (Data)  I2C1|
 |PB8|SW-Select|INPUT|Switch (Select), Boot Select(Low:Boot from Flash, High:Boot from USB)|
 
 # How To Write Firmware
@@ -115,7 +115,16 @@ LEDが緑→水色→青と点滅すればOK。
 
 # Hardware Issues
 ### <b>LEDmatrixに対し電源が供給されていません（配線ミス）。電源線を追加する必要があります</b>
+
+* 以下のようにボタンの右上(SW2 2pin)とR55のどちらかのピン（どちらでも同じ）をスズメッキ線などで接続してください。
+* なお、この修正方法では、LEDドライバおよびLEDに3.3Vが供給されます。本来は4.5Vを供給する予定でしたが、3.3Vでも機能します。
+![](https://github.com/shujima/type-c-card/blob/master/img/Errata_LED.jpg)
+
 ### Do not populateに指定されている部品類もあやまって実装されています。
+### 現状動作確認が終了していません。
+* USB PD
+* CAN
+* USB Serial
 
 
 # 後悔＆将来やりたいこと
