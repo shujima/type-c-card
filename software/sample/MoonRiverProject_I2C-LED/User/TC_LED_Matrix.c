@@ -1,5 +1,5 @@
 
-#include "LED_Matrix.h"
+#include <TC_LED_Matrix.h>
 
 #define VIRTUAL_MATRIX_WIDTH 600
 #define DISPLAY_WIDTH 14
@@ -68,6 +68,23 @@ void font_init() //private
     }
 }
 
+
+/*********************************************************************
+ * @fn      Matrix_init
+ *
+ * @brief   init matrix setting
+ *
+ * @return  0 : ok , -1 abend
+ */
+int Matrix_init()
+{
+    IS31FL3731_Init();
+    IS31FL3731_changeDisplayFrame(1);
+    IS31FL3731_clearFrame(1);
+    return 0;
+}
+
+
 /*********************************************************************
  * @fn      IS31FL3731_setBufPixel
  *
@@ -76,7 +93,7 @@ void font_init() //private
  *
  * @return  0 : ok , -1 abend
  */
-int IS31FL3731_setBufPixel(u8 vertical,u8 horizontal,u8 green,u8 blue)
+int Matrix_setBufPixel(u8 vertical,u8 horizontal,u8 green,u8 blue)
 {
     if(vertical < 0 || vertical > 4 || horizontal < 0 || horizontal > 99)return -1;
     matrix_buf[0][vertical][horizontal] = green;
@@ -93,7 +110,7 @@ int IS31FL3731_setBufPixel(u8 vertical,u8 horizontal,u8 green,u8 blue)
  *
  * @return  0<= : ok(end position + 1) , -1 abend
  */
-int IS31FL3731_setBufChar(char chr, u8 green, u8 blue, u16 offset)
+int Matrix_setBufChar(char chr, u8 green, u8 blue, u16 offset)
 {
     u8 fl = 0;
     if(chr > 127) return -1;
@@ -121,14 +138,14 @@ int IS31FL3731_setBufChar(char chr, u8 green, u8 blue, u16 offset)
  *
  * @return  0<= : ok(end position + 1) , -1 abend
  */
-int IS31FL3731_setBufPrint(char *str, u8 green, u8 blue, u16 offset)
+int Matrix_setBufPrint(char *str, u8 green, u8 blue, u16 offset)
 {
     u8 r = 0;
     u16 p = offset;
     for(int i = 0 ; str[i] != 0 ; i ++)
     {
         //if(r < 0 || offset > VIRTUAL_MATRIX_WIDTH - MAX_FONT_WIDTH)return -1;
-        r = IS31FL3731_setBufChar(str[i], green, blue, p);
+        r = Matrix_setBufChar(str[i], green, blue, p);
         p += font_width[str[i]] + 1;
         if(r < 0)return -1;
     }
@@ -142,7 +159,7 @@ int IS31FL3731_setBufPrint(char *str, u8 green, u8 blue, u16 offset)
  *
  * @return  0 : ok , -1 abend
  */
-int IS31FL3731_writePixelsToFrame(u8 frame, u16 offset)
+int Matrix_writePixelsToFrame(u8 frame, u16 offset)
 {
     if(frame < 1 || frame > 8 || offset < 0 || offset > VIRTUAL_MATRIX_WIDTH - DISPLAY_WIDTH)return -1;
 
@@ -163,8 +180,24 @@ int IS31FL3731_writePixelsToFrame(u8 frame, u16 offset)
     return 0;
 }
 
-
-void clearBuf()
+/*********************************************************************
+ * @fn      Matrix_clearBuf()
+ *
+ * @brief   clear buffer
+ *
+ * @return  0 : ok , -1 abend
+ */
+int Matrix_clearBuf()
 {
-
+    for(u8 i = 0 ; i < 2 ; i ++)
+    {
+        for(u8 j = 0 ; j < 5 ; j ++)
+        {
+            for(u16 k = 0 ; k < VIRTUAL_MATRIX_WIDTH ; k ++)
+            {
+                matrix_buf[i][j][k] = 0;
+            }
+        }
+    }
+    return 0;
 }

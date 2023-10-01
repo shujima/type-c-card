@@ -1,5 +1,6 @@
-User/LED_IS31FL3731.o: ../User/LED_IS31FL3731.c \
- C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\User/LED_IS31FL3731.h \
+User/TC_LED_Matrix.o: ../User/TC_LED_Matrix.c \
+ C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\User/TC_LED_Matrix.h \
+ C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\User/I2C_LED_IS31FL3731.h \
  C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\Debug/debug.h \
  C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\Peripheral\inc/ch32v20x.h \
  C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\Core/core_riscv.h \
@@ -28,7 +29,9 @@ User/LED_IS31FL3731.o: ../User/LED_IS31FL3731.c \
  C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\Peripheral\inc/ch32v20x_misc.h \
  C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\User/I2C.h
 
-C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\User/LED_IS31FL3731.h:
+C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\User/TC_LED_Matrix.h:
+
+C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\User/I2C_LED_IS31FL3731.h:
 
 C:\Develop\Hobby_ECAD\type-c-card\software\sample\MoonRiverProject_I2C-LED\Debug/debug.h:
 

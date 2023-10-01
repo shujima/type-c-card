@@ -1,5 +1,5 @@
 // Author : shujima in 2023
-#include <LED_IS31FL3731.h>
+#include <I2C_LED_IS31FL3731.h>
 
 //#define VIRTUAL_MATRIX_WIDTH 600
 //#define DISPLAY_WIDTH 14
@@ -127,9 +127,9 @@ void IS31FL3731_Init()
 {
     IS31FL3731_selectRegPage(9);
 
-    IS31FL3731_writeFuncReg(ISSI_REG_SHUTDOWN, 0);
+    IS31FL3731_writeFuncReg(0x0A, 0); //Shutdown
     Delay_Ms(10);
-    IS31FL3731_writeFuncReg(ISSI_REG_SHUTDOWN, 1);
+    IS31FL3731_writeFuncReg(0x0A, 1); //Turn on
 
     GPIO_WriteBit(GPIOA, GPIO_Pin_4, Bit_SET);
 
@@ -153,7 +153,7 @@ void IS31FL3731_Init()
 void IS31FL3731_changeDisplayFrame(u8 frame)
 {
     if(frame <= 0 || frame >= 9)return;
-    IS31FL3731_writeFuncReg(ISSI_REG_PICTUREFRAME, frame - 1);
+    IS31FL3731_writeFuncReg(0x01, frame - 1); // Picture Frame setting
 }
 
 /*********************************************************************
@@ -209,107 +209,3 @@ void IS31Fl3731_writeFrame(u8 frame, u8 * buf)
         IS31FL3731_selectRegPage(page_now);
     }
 }
-
-///*********************************************************************
-// * @fn      IS31FL3731_setBufPixel
-// *
-// * @brief   Set the virtual pixel buffer ( array data ) of PWM value (0-255) of each color (green/blue)
-// *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
-// *
-// * @return  0 : ok , -1 abend
-// */
-//int IS31FL3731_setBufPixel(u8 vertical,u8 horizontal,u8 green,u8 blue)
-//{
-//    if(vertical < 0 || vertical > 4 || horizontal < 0 || horizontal > 99)return -1;
-//    matrix_buf[0][vertical][horizontal] = green;
-//    matrix_buf[1][vertical][horizontal] = blue;
-//    return 0;
-//}
-//
-//
-///*********************************************************************
-// * @fn      IS31FL3731_setBufChar
-// *
-// * @brief   Set the virtual pixel buffer ( array data ) by internal font char of PWM value (0-255) of each color (green/blue)
-// *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
-// *
-// * @return  0<= : ok(end position + 1) , -1 abend
-// */
-//int IS31FL3731_setBufChar(char chr, u8 green, u8 blue, u16 offset)
-//{
-//    u8 fl = 0;
-//    if(chr > 127) return -1;
-//
-//    if(font_ptr_set_flag == 0)font_init(); //Make the font ptr array when only first time.
-//
-//    for(u8 h = 0; h < font_width[chr]; h ++)
-//    {
-//        for(u8 v = 0; v < 5; v ++)
-//        {
-//            fl = font_band[font_ptr[chr] + h] & (1 << v);
-//            if(h + offset >= VIRTUAL_MATRIX_WIDTH) return -1;
-//            matrix_buf[0][v][h + offset] = fl ? green : 0;
-//            matrix_buf[1][v][h + offset] = fl ? blue  : 0;
-//        }
-//    }
-//    return offset + font_width[chr];
-//}
-//
-///*********************************************************************
-// * @fn      IS31FL3731_setBufPrint
-// *
-// * @brief   Set the virtual pixel buffer ( array data ) by internal font string of PWM value (0-255) of each color (green/blue)
-// *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
-// *
-// * @return  0<= : ok(end position + 1) , -1 abend
-// */
-//int IS31FL3731_setBufPrint(char *str, u8 green, u8 blue, u16 offset)
-//{
-//    u8 r = 0;
-//    u16 p = offset;
-//    for(int i = 0 ; str[i] != 0 ; i ++)
-//    {
-//        //if(r < 0 || offset > VIRTUAL_MATRIX_WIDTH - MAX_FONT_WIDTH)return -1;
-//        r = IS31FL3731_setBufChar(str[i], green, blue, p);
-//        p += font_width[str[i]] + 1;
-//        if(r < 0)return -1;
-//    }
-//    return p;
-//}
-//
-///*********************************************************************
-// * @fn      IS31FL3731_writePixelsToFrame
-// *
-// * @brief   Write from virtual pixel buffer (matrix array) to actual pixel frame
-// *
-// * @return  0 : ok , -1 abend
-// */
-//int IS31FL3731_writePixelsToFrame(u8 frame, u16 offset)
-//{
-//    if(frame < 1 || frame > 8 || offset < 0 || offset > VIRTUAL_MATRIX_WIDTH - DISPLAY_WIDTH)return -1;
-//
-//    u8 buf[144];
-//    u8 t;
-//    for(u8 j = 0 ; j < 5 ; j ++)
-//    {
-//        for (u8 k = 0 ; k < 14 ; k ++)
-//        {
-//            t = matrix_table[j][k];
-//            buf[(u8)(t / 8) * 16 + t % 8] = matrix_buf[0][j][k+offset]; //green
-//            buf[(u8)(t / 8) * 16 + t % 8 + 8 ] = matrix_buf[1][j][k+offset]; //blue
-//
-//        }
-//    }
-//    if(page_now != frame)
-//    {
-//        IS31FL3731_selectRegPage(frame);
-//    }
-//    for(int i = 0 ; i < 18 ; i ++)
-//    {
-//        I2C_write(I2C_ADDR, 0x24 + i * 8, 8,buf + i * 8);
-//    }
-//
-//    IS31FL3731_selectRegPage(page_now);
-//    return 0;
-//}
-
