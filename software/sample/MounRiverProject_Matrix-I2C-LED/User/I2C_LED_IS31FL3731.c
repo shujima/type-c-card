@@ -194,6 +194,13 @@ void IS31FL3731_clearFrame(u8 frame)
 }
 
 
+/*********************************************************************
+ * @fn      IS31FL3731_writeFrame(u8 frame,u8 * buf)
+ *
+ * @brief   Write (set) frame by buffer
+ *
+ * @return  none
+ */
 void IS31Fl3731_writeFrame(u8 frame, u8 * buf)
 {
     if(page_now != frame)
