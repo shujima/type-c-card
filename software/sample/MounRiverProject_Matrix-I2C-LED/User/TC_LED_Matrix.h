@@ -14,8 +14,8 @@
 #endif /* SHUJIMA_LED_MATRIX_H_ */
 
 int Matrix_init();
-int Matrix_setBufPixel(u8 vertical,u8 horizontal,u8 green,u8 blue);
+int Matrix_setBufPixel(u8 vertical,u16 horizontal,u8 green,u8 blue);
 int Matrix_setBufChar(char chr, u8 green, u8 blue, u16 offset);
 int Matrix_setBufPrint(char *str, u8 green, u8 blue, u16 offset);
-int Matrix_writePixelsToFrame(u8 frame, u16 offset);
+int Matrix_writeBufToMatrix(u16 offset);
 int Matrix_clearBuf();

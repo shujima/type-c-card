@@ -17,7 +17,6 @@
 
 
 void font_init();
-void IS31FL3731_Init();
 void IS31FL3731_selectRegPage(u8 page);
 void IS31FL3731_writeFuncReg(u8 reg, u8 data);
 void IS31FL3731_changeDisplayFrame(u8 frame);

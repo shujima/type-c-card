@@ -78,9 +78,22 @@ void font_init() //private
  */
 int Matrix_init()
 {
-    IS31FL3731_Init();
-    IS31FL3731_changeDisplayFrame(1);
-    IS31FL3731_clearFrame(1);
+    IS31FL3731_selectRegPage(9);
+
+    IS31FL3731_writeFuncReg(0x0A, 0); //Shutdown
+    Delay_Ms(10);
+    IS31FL3731_writeFuncReg(0x0A, 1); //Turn on
+
+    IS31FL3731_writeFuncReg(0x00, 0); // Configuration = PictureMode (Not use Auto Play)
+    //IS31FL3731_writeFuncReg(0x02, 0); // Auto Play Control 1
+    //IS31FL3731_writeFuncReg(0x03, 0); // Auto Play Control 2
+    //IS31FL3731_writeFuncReg(0x05, 0); // Display Option
+    IS31FL3731_writeFuncReg(0x06, 0); // Audio Synchronization = disable
+    //IS31FL3731_writeFuncReg(0x08, 0); // Breath Control 1
+    //IS31FL3731_writeFuncReg(0x09, 0); // Breath Control 2
+
+    IS31FL3731_changeDisplayFrame(1); // This code only use Frame 1 of IS31FL3731
+    IS31FL3731_clearFrame(1);  // This code only use Frame 1 of IS31FL3731
     return 0;
 }
 
@@ -89,13 +102,13 @@ int Matrix_init()
  * @fn      Matrix_setBufPixel
  *
  * @brief   Set the virtual pixel buffer ( array data ) of PWM value (0-255) of each color (green/blue)
- *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
+ *          The virtual pixels size is 5 (0-4) x VIRTUAL_MATRIX_WIDTH(14 << X), actual one is 5 x 14 so it can flow by offset
  *
  * @return  0 : ok , -1 abend
  */
-int Matrix_setBufPixel(u8 vertical,u8 horizontal,u8 green,u8 blue)
+int Matrix_setBufPixel(u8 vertical,u16 horizontal,u8 green,u8 blue)
 {
-    if(vertical < 0 || vertical > 4 || horizontal < 0 || horizontal > 99)return -1;
+    if(vertical < 0 || vertical > 4 || horizontal < 0 || horizontal >= VIRTUAL_MATRIX_WIDTH)return -1;
     matrix_buf[0][vertical][horizontal] = green;
     matrix_buf[1][vertical][horizontal] = blue;
     return 0;
@@ -106,7 +119,7 @@ int Matrix_setBufPixel(u8 vertical,u8 horizontal,u8 green,u8 blue)
  * @fn      Matrix_setBufChar
  *
  * @brief   Set the virtual pixel buffer ( array data ) by internal font char of PWM value (0-255) of each color (green/blue)
- *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
+ *          The virtual pixels size is 5 (0-4) x VIRTUAL_MATRIX_WIDTH(14 << X), actual one is 5 x 14 so it can flow by offset
  *
  * @return  0<= : ok(end position + 1) , -1 abend
  */
@@ -134,7 +147,7 @@ int Matrix_setBufChar(char chr, u8 green, u8 blue, u16 offset)
  * @fn      Matrix_setBufPrint
  *
  * @brief   Set the virtual pixel buffer ( array data ) by internal font string of PWM value (0-255) of each color (green/blue)
- *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
+ *          The virtual pixels size is 5 (0-4) x VIRTUAL_MATRIX_WIDTH(14 << X), actual one is 5 x 14 so it can flow by offset
  *
  * @return  0<= : ok(end position + 1) , -1 abend
  */
@@ -144,7 +157,6 @@ int Matrix_setBufPrint(char *str, u8 green, u8 blue, u16 offset)
     u16 p = offset;
     for(int i = 0 ; str[i] != 0 ; i ++)
     {
-        //if(r < 0 || offset > VIRTUAL_MATRIX_WIDTH - MAX_FONT_WIDTH)return -1;
         r = Matrix_setBufChar(str[i], green, blue, p);
         p += font_width[str[i]] + 1;
         if(r < 0)return -1;
@@ -153,15 +165,15 @@ int Matrix_setBufPrint(char *str, u8 green, u8 blue, u16 offset)
 }
 
 /*********************************************************************
- * @fn      Matrix_writePixelsToFrame
+ * @fn      Matrix_writeBufToMatrix
  *
  * @brief   Write from virtual pixel buffer (matrix array) to actual pixel frame
  *
  * @return  0 : ok , -1 abend
  */
-int Matrix_writePixelsToFrame(u8 frame, u16 offset)
+int Matrix_writeBufToMatrix(u16 offset)
 {
-    if(frame < 1 || frame > 8 || offset < 0 || offset > VIRTUAL_MATRIX_WIDTH - DISPLAY_WIDTH)return -1;
+    if(offset < 0 || offset > VIRTUAL_MATRIX_WIDTH - DISPLAY_WIDTH)return -1;
 
     u8 buf[144];
     u8 t;
@@ -175,7 +187,7 @@ int Matrix_writePixelsToFrame(u8 frame, u16 offset)
 
         }
     }
-    IS31Fl3731_writeFrame(frame, buf);
+    IS31Fl3731_writeFrame(1, buf);  // This code only use Frame 1 of IS31FL3731
 
     return 0;
 }

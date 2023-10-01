@@ -7,7 +7,6 @@
  *********************************************************************************
 */
 
-#include <I2C_LED_IS31FL3731.h>
 #include "debug.h"
 #include "I2C.h"
 #include <stdlib.h>
@@ -72,9 +71,10 @@ int main(void)
 
     I2C_init();
 
-
-
     Matrix_init();
+
+    u8 g = 50; // green brightness 0 - 255
+    u8 b = 0;   // blue brightness 0 - 255
 
 
 
@@ -86,8 +86,8 @@ int main(void)
     {
         for(int k = 0; k < 14 ; k ++)
         {
-            Matrix_setBufPixel(j,k,50,0);
-            Matrix_writePixelsToFrame(1, 0);
+            Matrix_setBufPixel(j,k,g,b);
+            Matrix_writeBufToMatrix(0);
 
             Delay_Ms(1);
 
@@ -95,13 +95,16 @@ int main(void)
         }
     }
 
+    g = 0;
+    b = 50;
+
     //BLUE
     for(int k = 0; k < 14 ; k ++)
     {
         for(int j = 0; j < 5 ; j ++)
         {
-            Matrix_setBufPixel(j,k,0,50);
-            Matrix_writePixelsToFrame(1, 0);
+            Matrix_setBufPixel(j,k,g,b);
+            Matrix_writeBufToMatrix(0);
 
             Delay_Ms(1);
         }
@@ -109,19 +112,28 @@ int main(void)
 
     Matrix_clearBuf();
 
+
+
     //Draw Logo by pixel
-    //Logo +
-    Matrix_setBufPixel(3,5,50,0);
-    Matrix_setBufPixel(2,6,50,0);
-    Matrix_setBufPixel(3,6,50,0);
-    Matrix_setBufPixel(4,6,50,0);
-    Matrix_setBufPixel(3,7,50,0);
+    //Green part
+    g = 50;
+    b = 0;
+    Matrix_setBufPixel(3,5,g,b);
+    Matrix_setBufPixel(2,6,g,b);
+    Matrix_setBufPixel(3,6,g,b);
+    Matrix_setBufPixel(4,6,g,b);
+    Matrix_setBufPixel(3,7,g,b);
     //Logo P
-    Matrix_setBufPixel(1,6,40,50);
-    Matrix_setBufPixel(1,7,40,50);
-    Matrix_setBufPixel(1,8,40,50);
-    Matrix_setBufPixel(2,9,40,50);
-    Matrix_setBufPixel(3,8,40,50);
+    //Blue part
+    g = 40;
+    b = 50;
+    Matrix_setBufPixel(1,6,g,b);
+    Matrix_setBufPixel(1,7,g,b);
+    Matrix_setBufPixel(1,8,g,b);
+    Matrix_setBufPixel(2,9,g,b);
+    Matrix_setBufPixel(3,8,g,b);
+
+    Matrix_writeBufToMatrix(0); //Drawing
 
 
     //Draw String
@@ -130,16 +142,20 @@ int main(void)
     p = Matrix_setBufPrint("   CH32V203 RISC-V MCU", 0, 100, p);
     p = Matrix_setBufPrint(" + IS31FL3731 CharliePlex Matrix ", 50, 50, p);
 
-    Matrix_writePixelsToFrame(1, 0); //Drawing
+    Matrix_writeBufToMatrix(0); //Drawing
+
+
     Delay_Ms(500);
 
+    //Flow
     for(u16 offset = 0 ; offset < p ; offset ++)
     {
-        Matrix_writePixelsToFrame(1, offset);
+        Matrix_writeBufToMatrix(offset);
         Delay_Ms(10);
     }
 
 
+    //Debug LED
     while(1)
     {
         Delay_Ms(1000);
