@@ -5,19 +5,25 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../User/IS31FL3731.c \
+../User/I2C.c \
+../User/LED_IS31FL3731.c \
+../User/LED_Matrix.c \
 ../User/ch32v20x_it.c \
 ../User/main.c \
 ../User/system_ch32v20x.c 
 
 OBJS += \
-./User/IS31FL3731.o \
+./User/I2C.o \
+./User/LED_IS31FL3731.o \
+./User/LED_Matrix.o \
 ./User/ch32v20x_it.o \
 ./User/main.o \
 ./User/system_ch32v20x.o 
 
 C_DEPS += \
-./User/IS31FL3731.d \
+./User/I2C.d \
+./User/LED_IS31FL3731.d \
+./User/LED_Matrix.d \
 ./User/ch32v20x_it.d \
 ./User/main.d \
 ./User/system_ch32v20x.d 
