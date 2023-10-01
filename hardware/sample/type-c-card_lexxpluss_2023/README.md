@@ -88,7 +88,7 @@
 |PB5|DEBUG-LED-B|OUTPUT|Debug LED (Blue)|
 |PB6|I2C_SCL|OUTPUT|I2C Bus (Clock) I2C1|
 |PB7|I2C_SDA|I/O|I2C Bus (Data)  I2C1|
-|PB8|SW-Select|INPUT|Switch (Select), Boot Select(Low:Boot from Flash, High:Boot from USB)|
+|PB8|SW-Select|INPUT|Boot Select(Low:Boot from Flash, High:Boot from USB)|
 
 # How To Write Firmware
 
@@ -120,7 +120,20 @@ LEDが緑→水色→青と点滅すればOK。
 * なお、この修正方法では、LEDドライバおよびLEDに3.3Vが供給されます。本来は4.5Vを供給する予定でしたが、3.3Vでも機能します。
 ![](https://github.com/shujima/type-c-card/blob/master/img/Errata_LED.jpg)
 
+### SELECT ボタンはプログラム内で入力ボタンとして使用できません。
+このボタンはBOOTセレクトボタンとしてのみ機能します。
+
 ### Do not populateに指定されている部品類もあやまって実装されています。
+本来非実装にすべき部品類がBOMの誤りにより実装されてしまっています。
+
+* USB Type-C CC
+  * R44
+  * R45
+* Capacitor
+  * C12
+  * C29
+  * C39
+
 ### 現状動作確認が終了していません。
 * USB PD
 * CAN
