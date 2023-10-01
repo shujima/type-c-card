@@ -1,5 +1,4 @@
-![](https://github.com/shujima/type-c-card/blob/master/img/card1.jpg)
-![](https://github.com/shujima/type-c-card/blob/master/img/card2.jpg)
+![](https://github.com/shujima/type-c-card/blob/master/img/card1.jpg)![](https://github.com/shujima/type-c-card/blob/master/img/card2.jpg)
 
 # Overview
 * 今後追記予定の項目
@@ -87,8 +86,8 @@
 |PB3|USB2241_RESET|OUTPUT|Reset Pin of USB2241 (Active Low)|
 |PB4|TPS65987_I2C_IRQ|INPUT|I2C Interrupt Input from TPS65987|
 |PB5|DEBUG-LED-B|OUTPUT|Debug LED (Blue)|
-|PB6|I2C_SCL|OUTPUT|I2C Bus (Clock)|
-|PB7|I2C_SDA|I/O|I2C_Bus (Data)|
+|PB6|I2C_SCL|OUTPUT|I2C Bus (Clock) I2C1|
+|PB7|I2C_SDA|I/O|I2C Bus (Data), I2C1|
 |PB8|SW-Select|INPUT|Switch (Select), Boot Select(Low:Boot from Flash, High:Boot from USB)|
 
 # How To Write Firmware
@@ -128,3 +127,5 @@ LEDが緑→水色→青と点滅すればOK。
   * スピーカ
   * 加速度センサ
   * スーパーキャパシタ
+  * IMU
+  * TOF
