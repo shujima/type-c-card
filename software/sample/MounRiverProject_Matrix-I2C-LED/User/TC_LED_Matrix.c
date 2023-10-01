@@ -86,7 +86,7 @@ int Matrix_init()
 
 
 /*********************************************************************
- * @fn      IS31FL3731_setBufPixel
+ * @fn      Matrix_setBufPixel
  *
  * @brief   Set the virtual pixel buffer ( array data ) of PWM value (0-255) of each color (green/blue)
  *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
@@ -103,7 +103,7 @@ int Matrix_setBufPixel(u8 vertical,u8 horizontal,u8 green,u8 blue)
 
 
 /*********************************************************************
- * @fn      IS31FL3731_setBufChar
+ * @fn      Matrix_setBufChar
  *
  * @brief   Set the virtual pixel buffer ( array data ) by internal font char of PWM value (0-255) of each color (green/blue)
  *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
@@ -131,7 +131,7 @@ int Matrix_setBufChar(char chr, u8 green, u8 blue, u16 offset)
 }
 
 /*********************************************************************
- * @fn      IS31FL3731_setBufPrint
+ * @fn      Matrix_setBufPrint
  *
  * @brief   Set the virtual pixel buffer ( array data ) by internal font string of PWM value (0-255) of each color (green/blue)
  *          The virtual pixels size is 5 (0-4) x 100 (0 - 99), actual one is 5 x 14 so it can flow by offset
@@ -153,7 +153,7 @@ int Matrix_setBufPrint(char *str, u8 green, u8 blue, u16 offset)
 }
 
 /*********************************************************************
- * @fn      IS31FL3731_writePixelsToFrame
+ * @fn      Matrix_writePixelsToFrame
  *
  * @brief   Write from virtual pixel buffer (matrix array) to actual pixel frame
  *
