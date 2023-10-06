@@ -69,7 +69,7 @@
 |ST25DV(NFC)-2|1010111*||
 |TPS65987(USB PD)|0100010*|USB PD|
 
-#### GPIO Pin Assign
+#### WCH32 GPIO Pin Assign
 
 |Pin|Name|Dir|Usage|
 |-|-|-|-|
@@ -81,6 +81,12 @@
 |PA5|DEBUG-LED-G|OUTPUT|Debug LED (Green)|
 |PA6|SW-Left|INPUT|Switch (Left)|
 |PA7|SW-Right|INPUT|Switch (Right)|
+|PA9|UART RX|OUTPUT|CH32:<b>TX</b> / FT231:RX  (Data from CH32)|
+|PA10/PA11|UART TX|INPUT|CH32:<b>RX</b> / FT231:TX  (Data from Outside) / CAN RXD |
+|PA12|CAN_TXD|OUTPUT|CAN TXD|
+|PA13|SWDIO|I/O|WCH-Link SWDIO Connection|
+|PA14|SWCLK|I/O|WCH-Link SWCLK Connection|
+|PA15|DCDC_4V5_EN|OUTPUT|Enable Pin of DC/DC 4.5V (Active High) |
 |PB0|FT231_RESET|OUTPUT|Reset Pin of FT231 (Active Low)|
 |PB1|USB_SWITCH_S|OUTPUT|USB Switch Control Pin (Low:FT231-Serial,High:USB2241-emmc)|
 |PB3|USB2241_RESET|OUTPUT|Reset Pin of USB2241 (Active Low)|
@@ -89,6 +95,46 @@
 |PB6|I2C_SCL|OUTPUT|I2C Bus (Clock) I2C1|
 |PB7|I2C_SDA|I/O|I2C Bus (Data)  I2C1|
 |PB8|SW-Select|INPUT|Boot Select(Low:Boot from Flash, High:Boot from USB)|
+
+#### Debug Through hall (Pin Header) Assign
+|Silk|To|Usage|
+|-|-|-|
+|+|3.3V|Power|
+|T|PA10/PA11|UART <b>RX</b>|
+|R|PA9|UART <b>TX</b>|
+|GND|GND|Power|
+|3.3V|3.3V|Power|
+|0|PortA:0|ST25_GPO|
+|1|PortA:1|Voltage_FB|
+|2|PortA:2|PowerOut|
+|3|PortA:3|LED_INTB|
+|4|PortA:4||
+|5|PortA:5|DEBUG-LED-G|
+|6|PortA:6|SW-Left|
+|7|PortA:7|SW-Right|
+|9|PortA:9|UART RX|
+|10/11|PortA:10/11|UART TX|
+|12|PortA:12|CAN_TXD|
+|15|PortA:15|DCDC_4V5_EN|
+|0|PortB:0|FT231_RESET|
+|1|PortB:1|USB_SWITCH_S|
+|3|PortB:3|USB2241_RESET|
+|4|PortB:4|TPS65987_I2C_IRQ|
+|5|PortB:5|DEBUG-LED-B|
+|6|PortB:6|I2C_SCL|
+|7|PortB:7|I2C_SDA|
+|8|PortB:8|SW-Select|
+|L|CANBUS L||
+|H|CANBUS H||
+| |GND||
+|C|SWCLK||
+|D|SWDIO||
+|G|GND||
+|I|3.3V||
+|x|(NC)||
+
+
+
 
 # How To Write Firmware
 
