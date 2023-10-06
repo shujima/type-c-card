@@ -81,8 +81,8 @@
 |PA5|DEBUG-LED-G|OUTPUT|Debug LED (Green)|
 |PA6|SW-Left|INPUT|Switch (Left)|
 |PA7|SW-Right|INPUT|Switch (Right)|
-|PA9|UART RX|OUTPUT|CH32:<b>TX</b> / FT231:RX  (Data from CH32)|
-|PA10/PA11|UART TX|INPUT|CH32:<b>RX</b> / FT231:TX  (Data from Outside) / CAN RXD |
+|PA9|RX|OUTPUT|CH32:<b>UART TX</b> / FT231:RX  (Data from CH32)|
+|PA10/PA11|TX|INPUT|CH32:<b>UART RX</b> / FT231:TX  (Data from Outside) / CAN RXD |
 |PA12|CAN_TXD|OUTPUT|CAN TXD|
 |PA13|SWDIO|I/O|WCH-Link SWDIO Connection|
 |PA14|SWCLK|I/O|WCH-Link SWCLK Connection|
@@ -100,8 +100,8 @@
 |Silk|To|Usage|
 |-|-|-|
 |+|3.3V|Power|
-|T|PA10/PA11|UART <b>RX</b>|
-|R|PA9|UART <b>TX</b>|
+|T|PA10/PA11|<b>UART RX</b>|
+|R|PA9|<b>UART TX</b>|
 |GND|GND|Power|
 |3.3V|3.3V|Power|
 |0|PortA:0|ST25_GPO|
